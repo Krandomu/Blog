@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from dashboard.blog.models import Group
+from dashboard.blog.models import Categories
 
 def index(request):
 
-    groups = Group.objects.all()
+    categories = Categories.objects.all()
 
     data = {
-        'groups' : groups
+        'categories' : categories
     }
     return render(request, 'app/index.html', data)

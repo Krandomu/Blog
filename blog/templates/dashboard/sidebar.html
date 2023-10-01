@@ -14,19 +14,25 @@
     
 
     
-    <li class="nav-item py-3 {% if request.resolver_match.url_name == 'categories' %}active{% endif %}">
-      <a class="nav-link" href="{% url 'blog'  %}">
+    <li class="nav-item py-3 {% if request.resolver_match.url_name == 'blog' %}dropdown show active{% else %}dropdown{% endif %}">
+      <a class="nav-link" href="{% url 'blog'  %}" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="menu-icon">
           <i class="mdi mdi-speedometer"></i>
         </span>
         <span class="menu-title">Blog</span>
       </a>
     </li>
+    {% if request.resolver_match.url_name == 'blog' or request.resolver_match.url_name == 'blog-categorie' or request.resolver_match.url_name == 'post' %}
+    <div class="my-2 show">
+      {% for categorie in categories %}
+      <a class="nav-link ml-4" href="{% url 'blog-categorie' categorie_id=categorie.id %}">{{ categorie.name }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+    
+    
 
-
-
-
-    <li class="nav-item py-3 {% if request.resolver_match.url_name == 'logs' %}active{% endif %}">
+    <li class="nav-item py-3">
       <a class="nav-link" href="#">
         <span class="menu-icon">
           <i class="mdi mdi-speedometer"></i>

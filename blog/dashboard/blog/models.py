@@ -1,15 +1,22 @@
 from django.db import models
 
-class Group(models.Model):
+class Categories(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.name
     
-
-class Hashtag(models.Model):
+class SubCategories(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='hashtags', blank=True)
+    categorie = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name='subcategorie', blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Posts(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    subcategorie = models.ForeignKey(SubCategories, on_delete=models.CASCADE, related_name='posts', blank=True)
 
     def __str__(self):
         return self.name

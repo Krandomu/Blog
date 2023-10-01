@@ -86,16 +86,16 @@
     <div class="col-xl-8 col-sm-8 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title text-center">Add group</h4>
-                <p class="card-description">Introduce el nombre del nuevo grupo : </p>
-                <form class="forms-sample" action="{% url 'add_group' %}" method="post">
+                <h4 class="card-title text-center">Add Categorie</h4>
+                <p class="card-description">Introduce el nombre de la nueva categoria : </p>
+                <form class="forms-sample" action="{% url 'add_categorie' %}" method="post">
                     {% csrf_token %}
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="group-name" required="True"
+                    <div class="form-categorie">
+                        <input type="text" class="form-control" name="categorie-name" required="True"
                             placeholder="Introduce el nombre aqui">
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">ADD</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">ADD</button>
                 </form>
 
             </div>
@@ -112,155 +112,69 @@
       </div>
 
 
-        {% for group in groups %}
-        <div class="col-lg-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex">
-                            <i class="mdi mdi-border-color"></i>
-                            <h4 class="card-title display-5 ml-3">{{ group.name }}</h4>
-                        </div>
-                        <div class="text-right">
-                            <button type="button" class="btn btn-outline-primary btn-fw grid-margin" data-toggle="modal"
-                                data-target="#addHashtagModal-{{ group.id }}"
-                                data-title="Add hashtag to {{ group.name }}">Add hashtag</button>
-                            <button type="button" class="btn btn-outline-primary btn-fw grid-margin ml-3"
-                                data-toggle="modal" data-target="#deleteGroupModal-{{ group.id }}"
-                                data-title="Delete group {{ group.name }}">Delete group</button>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th class="text-secondary">EDIT</th>
-                                    <th class="text-secondary">ID</th>
-                                    <th class="text-secondary">HASHTAG</th>
-                                    <th class="text-secondary">POPULARITY</th>
-                                    <th class="text-secondary">CREATED</th>
-                                    <th class="text-secondary">MOVE</th>
-                                    <th class="text-secondary">DELETE</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for hashtag in group.hashtags.all %}
-                                <tr>
-                                    <td><i class="mdi mdi-border-color"></i></td>
-                                    <td>{{ hashtag.id }}</td>
-                                    <td>{{ hashtag.name }}</td>
-                                    <td>100</td>
-                                    <td>12 May 2017</td>
-                                    <td><button type="button" class="btn btn-inverse-primary btn-fw" data-toggle="modal"
-                                            data-target="#moveHashtagModal-{{ hashtag.id }}"
-                                            data-title="Move hashtag {{ hashtag.name }}">Move</button></td>
-                                    <td><button type="button" class="btn btn-inverse-primary btn-fw" data-toggle="modal"
-                                            data-target="#deleteHashtagModal-{{ hashtag.id }}"
-                                            data-title="Delete hashtag {{ hashtag.name }}">Delete</button></td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
 
-
-    {% for group in groups %}
-    <div class="modal fade" id="addHashtagModal-{{ group.id }}" tabindex="-1" role="dialog"
-        aria-labelledby="addHashtagModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content pop-up-color">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add hashtag</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{% url 'add_hashtag' %}" method="post">
-                    {% csrf_token %}
-                    <div class="modal-body">
-                        <h5>Introduce el nombre para el nuevo hashtag de {{ group.name }} :</h5>
-                        <input type="hidden" name="group-id" value="{{ group.id }}">
-                        <input type="text" class="form-control" name="hashtag-name" required="True"
-                            placeholder="Introduce el nombre aqui">
-
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex">
+                        <h4 class="card-title display-5 ml-3">Categories</h4>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    <div class="modal fade" id="deleteGroupModal-{{ group.id }}" tabindex="-1" role="dialog"
-        aria-labelledby="deleteGroupModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content pop-up-color">
-                <div class="modal-header">
-                    <h5 class="modal-title">Delete group</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
-                <form action="{% url 'delete_group' %}" method="post">
-                    {% csrf_token %}
-                    <div class="modal-body">
-                        <h5>Esta seguro que desea eliminar el grupo {{ group.name }}, todos los hashtags de este grupo
-                            se eliminaran con el :</h5>
-                        <input type="hidden" name="group-id" value="{{ group.id }}">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-secondary">EDIT</th>
+                                <th class="text-secondary">ID</th>
+                                <th class="text-secondary">NAME</th>
+                                <th class="text-secondary">POPULARITY</th>
+                                <th class="text-secondary">CREATED</th>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary">Yes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    {% for hashtag in group.hashtags.all %}
-    <div class="modal fade" id="moveHashtagModal-{{ hashtag.id }}" tabindex="-1" role="dialog"
-        aria-labelledby="moveHashtagModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content pop-up-color">
-                <div class="modal-header">
-                    <h5 class="modal-title">Move hashtag</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                                <th class="text-secondary">DELETE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for categorie in categories %}
+                            <tr>
+                                <td><i class="mdi mdi-border-color"></i></td>
+                                <td>{{ categorie.id }}</td>
+                                <td>{{ categorie.name }}</td>
+                                <td>100</td>
+                                <td>12 May 2017</td>
+                                <td><button type="button" class="btn btn-inverse-primary btn-fw" data-toggle="modal"
+                                        data-target="#deleteCategorieModal-{{ categorie.id }}"
+                                        data-title="Delete categorie {{ categorie.name }}">Delete</button></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="deleteHashtagModal-{{ hashtag.id }}" tabindex="-1" role="dialog"
-        aria-labelledby="deleteHashtagModalLabel" aria-hidden="true">
+
+
+
+{% for categorie in categories %}
+
+    <div class="modal fade" id="deleteCategorieModal-{{ categorie.id }}" tabindex="-1" role="dialog"
+        aria-labelledby="deleteCategorieModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content pop-up-color">
                 <div class="modal-header">
-                    <h5 class="modal-title">Delete hashtag</h5>
+                    <h5 class="modal-title">Delete categorie</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{% url 'delete_hashtag' %}" method="post">
+                <form action="{% url 'delete_categorie' %}" method="post">
                     {% csrf_token %}
                     <div class="modal-body">
-                        <h5>Esta seguro que desea eliminar el hashtag {{ hashtag.name }}, todas las estadisticas de este
-                            hashtag se eliminaran con el :</h5>
-                        <input type="hidden" name="hashtag-id" value="{{ hashtag.id }}">
+                        <h5>Esta seguro que desea eliminar la categoria {{ categorie.name }}?</h5>
+                        <input type="hidden" name="categorie-id" value="{{ categorie.id }}">
 
                     </div>
                     <div class="modal-footer">
@@ -273,7 +187,7 @@
     </div>
 </div>
 {% endfor %}
-{% endfor %}
+
 
 
 
