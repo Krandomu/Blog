@@ -2,5 +2,9 @@
 
 {% block content %}
 
+{% for elemento in post.elementos %}
+    <h1>{{elemento.contenido}}</h1>
+{% endfor %}
+
 
 {% endblock %}

@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Categories, SubCategories, Posts
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-
+from itertools import chain
 
 @login_required(login_url='/accounts/login/')
 def blog(request):
@@ -139,15 +139,27 @@ def delete_post(request):
 
     return redirect('blog')
 
+from itertools import chain
+
 @login_required(login_url='/accounts/login/')
 def post(request, post_id=None):
-    print(post_id)
     try:
         post = get_object_or_404(Posts, id=post_id)
         categories = Categories.objects.all()
+        titulos = list(post.titulo.all())
+        textos = list(post.texto.all())
+        archivos = list(post.archivo.all())
+        codigos = list(post.codigo.all())
+        imagenes = list(post.imagen.all())
+        todos_elementos = list(chain(titulos, textos, archivos, codigos, imagenes))
+        todos_elementos_ordenados = sorted(todos_elementos, key=lambda x: x.fecha_creacion)
+        post.elementos = todos_elementos_ordenados
 
     except Categories.DoesNotExist:
         messages.error(request, 'Categorie not found.')
         return redirect('blog')  
 
-    return render(request, 'dashboard/blog/post/index.html', {'categories': categories, 'post' : post })
+    return render(request, 'dashboard/blog/post/index.html', {
+        'categories': categories,
+        'post': post,
+    })
