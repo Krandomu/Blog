@@ -2,23 +2,51 @@
 
 {% block content %}
 
-{% for post in posts %}
-    <h1>{{ post.name }}</h1>
-    {% for elemento in post.elementos %}
-        {% if elemento.get_seccion_tipo == 'titulo' %}
-            <h4>{{ elemento.contenido }}</h4>
-        {% elif elemento.get_seccion_tipo == 'texto' %}
-            <p>{{ elemento.contenido }}</p>
-        {% elif elemento.get_seccion_tipo == 'codigo' %}
-            <div class="code-toolbar">
-                <pre class="language-{{ elemento.lenguaje }}"><code>{{ elemento.contenido|safe }}</code></pre>
-                <button class="copy-button" data-clipboard-target="#codigo-{{ elemento.id }}">Copiar</button>
+<div class="row">
+    <div class="col-md-2">
+        <div class="sidebar">
+            <ul class="list-group list-group-flush">
+                {% for post in posts %}
+                    <li class="list-group-item sidebar-post mb-2" data-toggle="collapse" data-target="#post{{ loop.index }}">
+                        {{ post.name }}
+                    </li>
+                    <div id="post{{ loop.index }}" class="collapse">
+                        {% for elemento in post.elementos %}
+                            {% if elemento.get_seccion_tipo == 'titulo' %}
+                                <li class="list-group-item sidebar-item ml-4">{{ elemento.contenido }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    
+    
+    <div class="col-md-10">
+        {% for post in posts %}
+            <div class="post-content text-center my-4 mx-2">
+                <h1>{{ post.name }}</h1>
+                {% for elemento in post.elementos %}
+                    {% if elemento.get_seccion_tipo == 'titulo' %}
+                        <h4>{{ elemento.contenido }}</h4>
+                    {% elif elemento.get_seccion_tipo == 'texto' %}
+                        <p class="text-justify">{{ elemento.contenido|linebreaks }}</p>
+                    {% elif elemento.get_seccion_tipo == 'codigo' %}
+                        <div class="code-toolbar mt-3 mb-4">
+                            <pre class="line-numbers-hidden language-{{ elemento.lenguaje }}"><code>{{ elemento.contenido|safe }}</code></pre>
+                            <button class="copy-button btn btn-primary" data-clipboard-target="#codigo-{{ elemento.id }}">Copiar</button>
+                        </div>
+                    {% elif elemento.get_seccion_tipo == 'imagen' %}
+                        <img class="img-fluid" src="{{ elemento.archivo.url }}" alt="{{ elemento.nombre }}">
+                    {% endif %}
+                {% endfor %}
             </div>
-        {% elif elemento.get_seccion_tipo == 'imagen' %}
-            <img src="{{ elemento.archivo.url }}" alt="{{ elemento.nombre }}">
-        {% endif %}
-    {% endfor %}
-{% endfor %}
+        {% endfor %}
+    </div>
+    
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

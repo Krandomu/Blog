@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from dashboard.blog.models import Categories, SubCategories, Posts, Titulos, Textos, Codigos, Imagenes, Archivos
-import markdown
+from markdown import markdown
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
@@ -44,15 +44,11 @@ def posts(request, subcategory_id=None):
             for codigo in codigos:
                 original_contenido = codigo.contenido
                 lexer = get_lexer_by_name("python", stripall=True)
-                formatter = HtmlFormatter(linenos=True, cssclass="code")
+                formatter = HtmlFormatter(linenos=False, cssclass="code")
                 codigo.contenido = highlight(original_contenido, lexer, formatter)
-                
-                # Aplicar Markdown al contenido del código
-                codigo.contenido = markdown.markdown(codigo.contenido)
 
-                # Agregar impresiones para depurar
-                print(f"Antes de Markdown: {original_contenido}")
-                print(f"Después de Markdown: {codigo.contenido}")
+                codigo.contenido = markdown(codigo.contenido, extensions=['codehilite'])
+
 
             # Agregar todos los elementos a la lista
             elementos_post.extend(titulos)
