@@ -1,7 +1,4 @@
 from django.db import models
-from django.db.models.signals import pre_delete
-from django.dispatch import receiver
-
 
 class Categories(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -13,51 +10,59 @@ class Categories(models.Model):
 class SubCategories(models.Model):
     name = models.CharField(max_length=100, unique=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    categorie = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name='subcategorie', blank=True)
+    category = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name='subcategories', blank=True)
 
     def __str__(self):
         return self.name
 
 class Posts(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    subcategorie = models.ForeignKey(SubCategories, on_delete=models.CASCADE, related_name='posts', blank=True)
+    subcategory = models.ForeignKey(SubCategories, on_delete=models.CASCADE, related_name='posts', blank=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
 
-
 class Titulos(models.Model):
     contenido = models.CharField(max_length=255)
     color = models.CharField(max_length=255, blank=True, null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='titulo')
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='titulos')
 
+    def get_seccion_tipo(self):
+        return 'titulo'
 
 class Textos(models.Model):
     contenido = models.TextField()
     color = models.CharField(max_length=255, blank=True, null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='texto')
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='textos')
 
+    def get_seccion_tipo(self):
+        return 'texto'
 
 class Codigos(models.Model):
     contenido = models.TextField()
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='codigo')
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='codigos')
 
+    def get_seccion_tipo(self):
+        return 'codigo'
 
 class Imagenes(models.Model):
     nombre = models.CharField(max_length=255)
     archivo = models.ImageField(upload_to='imagenes/')
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='imagen')
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='imagenes')
 
+    def get_seccion_tipo(self):
+        return 'imagen'
 
 class Archivos(models.Model):
     nombre = models.CharField(max_length=255)
     archivo = models.FileField(upload_to='archivos/')
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='archivo')
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='archivos')
 
-
+    def get_seccion_tipo(self):
+        return 'archivo'

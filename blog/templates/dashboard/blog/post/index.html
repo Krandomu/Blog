@@ -26,17 +26,20 @@
 
 {% for elemento in post.elementos %}
 <div class="col-lg-12 grid-margin stretch-card">
-    <form class="w-100">
+    <form class="w-100" method="post" action="{% url 'update_or_delete_section' %}">
+        {% csrf_token %}
+        <input type="hidden" name="seccion_id" value="{{ elemento.id }}">
+        <input type="hidden" name="seccion_tipo" value="{{ elemento.get_seccion_tipo }}">
         <div class="card mx-0">
             <div class="card-body">
                 <button class="navbar-toggler navbar-toggler float-right mb-2 mt-0" type="button">
                     <span class="mdi mdi-menu"></span>
-                  </button>
+                </button>
                 <div class="form-group">
-                    <input type="text" class="form-control" value="{{elemento.contenido}}">
+                    <input type="text" class="form-control" name="nuevo_contenido" placeholder="{{ elemento.contenido }}">
                 </div>
-                <button type="submit" class="btn btn-primary float-right mt-2 ml-3">Delete</button>
-                <button type="submit" class="btn btn-primary float-right mt-2 ">Update</button>
+                <button type="submit" class="btn btn-danger float-right mt-2" name="action" value="delete">Delete</button>
+                <button type="submit" class="btn btn-primary float-right mt-2 ml-3" name="action" value="update">Update</button>
             </div>
         </div>
     </form>

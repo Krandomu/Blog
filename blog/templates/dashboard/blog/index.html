@@ -86,12 +86,12 @@
     <div class="col-xl-8 col-sm-8 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title text-center">Add Categorie</h4>
+                <h4 class="card-title text-center">Add Category</h4>
                 <p class="card-description">Introduce el nombre de la nueva categoria : </p>
-                <form class="forms-sample" action="{% url 'add_categorie' %}" method="post">
+                <form class="forms-sample" action="{% url 'add_category' %}" method="post">
                     {% csrf_token %}
-                    <div class="form-categorie">
-                        <input type="text" class="form-control" name="categorie-name" required="True"
+                    <div class="form-category">
+                        <input type="text" class="form-control" name="category-name" required="True"
                             placeholder="Introduce el nombre aqui">
                     </div>
 
@@ -129,23 +129,20 @@
                                 <th class="text-secondary">EDIT</th>
                                 <th class="text-secondary">ID</th>
                                 <th class="text-secondary">NAME</th>
-                                <th class="text-secondary">POPULARITY</th>
                                 <th class="text-secondary">CREATED</th>
-
                                 <th class="text-secondary">DELETE</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for categorie in categories %}
+                            {% for category in categories %}
                             <tr>
                                 <td><i class="mdi mdi-border-color"></i></td>
-                                <td>{{ categorie.id }}</td>
-                                <td>{{ categorie.name }}</td>
-                                <td>100</td>
-                                <td>12 May 2017</td>
+                                <td>{{ category.id }}</td>
+                                <td>{{ category.name }}</td>
+                                <td>{{ category.fecha_creacion }}</td>
                                 <td><button type="button" class="btn btn-inverse-primary btn-fw" data-toggle="modal"
-                                        data-target="#deleteCategorieModal-{{ categorie.id }}"
-                                        data-title="Delete categorie {{ categorie.name }}">Delete</button></td>
+                                        data-target="#deleteCategoryModal-{{ category.id }}"
+                                        data-title="Delete category {{ category.name }}">Delete</button></td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -158,23 +155,23 @@
 
 
 
-{% for categorie in categories %}
+{% for category in categories %}
 
-    <div class="modal fade" id="deleteCategorieModal-{{ categorie.id }}" tabindex="-1" role="dialog"
-        aria-labelledby="deleteCategorieModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteCategoryModal-{{ category.id }}" tabindex="-1" role="dialog"
+        aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content pop-up-color">
                 <div class="modal-header">
-                    <h5 class="modal-title">Delete categorie</h5>
+                    <h5 class="modal-title">Delete category</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{% url 'delete_categorie' %}" method="post">
+                <form action="{% url 'delete_category' %}" method="post">
                     {% csrf_token %}
                     <div class="modal-body">
-                        <h5>Esta seguro que desea eliminar la categoria {{ categorie.name }}?</h5>
-                        <input type="hidden" name="categorie-id" value="{{ categorie.id }}">
+                        <h5>Esta seguro que desea eliminar la categoria {{ category.name }}?</h5>
+                        <input type="hidden" name="category-id" value="{{ category.id }}">
 
                     </div>
                     <div class="modal-footer">

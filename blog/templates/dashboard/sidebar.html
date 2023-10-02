@@ -22,10 +22,10 @@
         <span class="menu-title">Blog</span>
       </a>
     </li>
-    {% if request.resolver_match.url_name == 'blog' or request.resolver_match.url_name == 'blog-categorie' or request.resolver_match.url_name == 'post' %}
+    {% if request.resolver_match.url_name == 'blog' or request.resolver_match.url_name == 'blog-category' or request.resolver_match.url_name == 'post' %}
     <div class="my-2 show">
-      {% for categorie in categories %}
-      <a class="nav-link ml-4" href="{% url 'blog-categorie' categorie_id=categorie.id %}">{{ categorie.name }}</a>
+      {% for category in categories %}
+      <a class="nav-link ml-4" href="{% url 'blog-category' category_id=category.id %}">{{ category.name }}</a>
       {% endfor %}
     </div>
     {% endif %}
