@@ -5,6 +5,7 @@ from .models import Categories, SubCategories, Posts, Titulos, Textos, Codigos, 
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from itertools import chain
+import markdown
 
 @login_required(login_url='/accounts/login/')
 def blog(request):
@@ -16,7 +17,7 @@ def add_category(request):
     if request.method == "POST":
         try:
             category_name = request.POST.get('category-name')
-            if category_name:  # check if name is not empty
+            if category_name:
                 category = Categories(name=category_name)
                 category.save()
                 messages.success(request, 'Category successfully added.')
@@ -140,32 +141,40 @@ def delete_post(request):
     return redirect('blog')
 
 
-
-@login_required(login_url='/accounts/login/')
 def post(request, post_id=None):
     try:
         post = get_object_or_404(Posts, id=post_id)
         categories = Categories.objects.all()
-        titulos = list(post.titulo.all())
-        textos = list(post.texto.all())
-        archivos = list(post.archivo.all())
-        codigos = list(post.codigo.all())
-        imagenes = list(post.imagen.all())
+        titulos = Titulos.objects.filter(post=post)
+        textos = Textos.objects.filter(post=post)
+        archivos = Archivos.objects.filter(post=post)
+        codigos = Codigos.objects.filter(post=post)
+        print(codigos)
+        try:
+            for codigo in codigos:
+                print(codigo.contenido)
+                codigo.contenido = markdown.markdown(codigo.contenido)
+
+
+        except:
+            print("no hay contenido")
+
+        imagenes = Imagenes.objects.filter(post=post)
+
         todos_elementos = list(chain(titulos, textos, archivos, codigos, imagenes))
         todos_elementos_ordenados = sorted(todos_elementos, key=lambda x: x.fecha_creacion)
-        post.elementos = todos_elementos_ordenados
 
     except Categories.DoesNotExist:
         messages.error(request, 'Categorie not found.')
-        return redirect('blog')  
+        return redirect('blog')
 
     return render(request, 'dashboard/blog/post/index.html', {
         'categories': categories,
         'post': post,
+        'elementos': todos_elementos_ordenados,
     })
 
-
-
+@login_required(login_url='/accounts/login/')
 def update_or_delete_section(request):
     if request.method == 'POST':
         seccion_id = request.POST.get('seccion_id')
@@ -174,26 +183,24 @@ def update_or_delete_section(request):
         action = request.POST.get('action')
 
         if action == 'update':
+            seccion = None
             if seccion_tipo == 'titulo':
                 seccion = get_object_or_404(Titulos, id=seccion_id)
-                seccion.contenido = nuevo_contenido
-                seccion.save()
             elif seccion_tipo == 'texto':
                 seccion = get_object_or_404(Textos, id=seccion_id)
-                seccion.contenido = nuevo_contenido
-                seccion.save()
             elif seccion_tipo == 'codigo':
                 seccion = get_object_or_404(Codigos, id=seccion_id)
-                seccion.contenido = nuevo_contenido
-                seccion.save()
             elif seccion_tipo == 'imagen':
                 seccion = get_object_or_404(Imagenes, id=seccion_id)
-                seccion.nombre = nuevo_contenido
-                seccion.save()
             elif seccion_tipo == 'archivo':
                 seccion = get_object_or_404(Archivos, id=seccion_id)
-                seccion.nombre = nuevo_contenido
+
+            if seccion:
+                seccion.contenido = nuevo_contenido
                 seccion.save()
+                messages.success(request, 'Sección actualizada correctamente.')
+            else:
+                messages.error(request, 'Sección no encontrada.')
 
         elif action == 'delete':
             if seccion_tipo == 'titulo':
@@ -207,4 +214,54 @@ def update_or_delete_section(request):
             elif seccion_tipo == 'archivo':
                 Archivos.objects.filter(id=seccion_id).delete()
 
-    return redirect('post', post_id=seccion.post.id)
+            messages.success(request, 'Sección eliminada correctamente.')
+
+    return redirect('post', post_id=request.POST.get('post_id'))
+
+@login_required(login_url='/accounts/login/')
+def add_title(request, post_id):
+    if request.method == 'POST':
+        contenido = request.POST.get('contenido')
+        color = request.POST.get('color', '')
+        Titulos.objects.create(contenido=contenido, color=color, post_id=post_id)
+
+    return redirect('post', post_id=post_id)
+
+@login_required(login_url='/accounts/login/')
+def add_text(request, post_id):
+    if request.method == 'POST':
+        contenido = request.POST.get('contenido')
+        Textos.objects.create(contenido=contenido, post_id=post_id)
+
+    return redirect('post', post_id=post_id)
+
+@login_required(login_url='/accounts/login/')
+def add_code(request, post_id):
+    if request.method == 'POST':
+        contenido = request.POST.get('contenido')
+        Codigos.objects.create(contenido=contenido, post_id=post_id)
+
+    return redirect('post', post_id=post_id)
+
+@login_required(login_url='/accounts/login/')
+def add_image(request, post_id):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        archivo = request.FILES['archivo']  
+
+        Imagenes.objects.create(nombre=nombre, archivo=archivo, post_id=post_id)
+
+    return redirect('post', post_id=post_id)
+
+
+
+
+
+@login_required(login_url='/accounts/login/')
+def add_file(request, post_id):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        archivo = request.FILES['archivo'] 
+        Archivos.objects.create(nombre=nombre, archivo=archivo, post_id=post_id)
+
+    return redirect('post', post_id=post_id)

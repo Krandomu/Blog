@@ -12,6 +12,11 @@ urlpatterns = [
     path('dashboard/blog/category/add_post/', views.add_post, name='add-post'),
     path('dashboard/blog/category/delete_post/', views.delete_post, name='delete-post'),
     path('dashboard/blog/category/post/<int:post_id>/', views.post, name='post'),
-    path('update_or_delete_section/', views.update_or_delete_section, name='update_or_delete_section'),
+    path('dashboard/blog/category/post/update_or_delete_section/', views.update_or_delete_section, name='update_or_delete_section'),
+    path('dashboard/blog/category/post/add/title/<int:post_id>/', views.add_title, name='add_title'),
+    path('dashboard/blog/category/post/add/text/<int:post_id>/', views.add_text, name='add_text'),
+    path('dashboard/blog/category/post/add/code/<int:post_id>/', views.add_code, name='add_code'),
+    path('dashboard/blog/category/post/add/image/<int:post_id>/', views.add_image, name='add_image'),
+    path('dashboard/blog/category/post/add/file/<int:post_id>/', views.add_file, name='add_file'),
 
 ]

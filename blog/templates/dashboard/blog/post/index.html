@@ -13,32 +13,51 @@
                     <h1 class="card-title ml-3 mb-0 d-none d-lg-block">{{post.name}}</h1>
                 </div>
                 <div class="btn-group text-center order-lg-2">
-                    <button type="button" class="btn btn-outline-primary btn-sm">Add title</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm">Add text</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm">Add code</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm">Add image</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm">Add file</button>
+                    <form method="post" action="{% url 'add_title' post_id=post.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary btn-sm">Add title</button>
+                    </form>
+                    <form method="post" action="{% url 'add_text' post_id=post.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary btn-sm">Add text</button>
+                    </form>
+                    <form method="post" action="{% url 'add_code' post_id=post.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary btn-sm">Add code</button>
+                    </form>
+                    <form method="post" action="{% url 'add_image' post_id=post.id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary btn-sm">Add image</button>
+                    </form>
+                    <form method="post" action="{% url 'add_file' post_id=post.id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary btn-sm">Add file</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-{% for elemento in post.elementos %}
+{% for elemento in elementos %}
 <div class="col-lg-12 grid-margin stretch-card">
     <form class="w-100" method="post" action="{% url 'update_or_delete_section' %}">
         {% csrf_token %}
         <input type="hidden" name="seccion_id" value="{{ elemento.id }}">
         <input type="hidden" name="seccion_tipo" value="{{ elemento.get_seccion_tipo }}">
+        <input type="hidden" name="post_id" value="{{ post.id }}">
         <div class="card mx-0">
             <div class="card-body">
                 <button class="navbar-toggler navbar-toggler float-right mb-2 mt-0" type="button">
                     <span class="mdi mdi-menu"></span>
                 </button>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="nuevo_contenido" placeholder="{{ elemento.contenido }}">
+
+                        <!-- Mostrar el contenido en un input como un placeholder si no es "codigo" -->
+                        <input type="text" class="form-control" placeholder="{{ elemento.contenido|safe }}">
+
                 </div>
-                <button type="submit" class="btn btn-danger float-right mt-2" name="action" value="delete">Delete</button>
+                <button type="submit" class="btn btn-danger float-right mt-2 ml-3" name="action" value="delete">Delete</button>
                 <button type="submit" class="btn btn-primary float-right mt-2 ml-3" name="action" value="update">Update</button>
             </div>
         </div>

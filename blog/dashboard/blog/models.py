@@ -24,7 +24,7 @@ class Posts(models.Model):
         return self.name
 
 class Titulos(models.Model):
-    contenido = models.CharField(max_length=255)
+    contenido = models.CharField(max_length=255, blank=True, null=True)
     color = models.CharField(max_length=255, blank=True, null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='titulos')
@@ -33,7 +33,7 @@ class Titulos(models.Model):
         return 'titulo'
 
 class Textos(models.Model):
-    contenido = models.TextField()
+    contenido = models.TextField(blank=True, null=True)
     color = models.CharField(max_length=255, blank=True, null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='textos')
@@ -42,7 +42,7 @@ class Textos(models.Model):
         return 'texto'
 
 class Codigos(models.Model):
-    contenido = models.TextField()
+    contenido = models.TextField(blank=True, null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='codigos')
 
@@ -50,8 +50,8 @@ class Codigos(models.Model):
         return 'codigo'
 
 class Imagenes(models.Model):
-    nombre = models.CharField(max_length=255)
-    archivo = models.ImageField(upload_to='imagenes/')
+    nombre = models.CharField(max_length=255, blank=True, null=True)
+    archivo = models.ImageField(upload_to='imagenes/', blank=True, null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='imagenes')
 
@@ -59,8 +59,8 @@ class Imagenes(models.Model):
         return 'imagen'
 
 class Archivos(models.Model):
-    nombre = models.CharField(max_length=255)
-    archivo = models.FileField(upload_to='archivos/')
+    nombre = models.CharField(max_length=255, blank=True, null=True)
+    archivo = models.FileField(upload_to='archivos/', blank=True, null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='archivos')
 
