@@ -25,6 +25,14 @@ def subcategories(request, category_id=None):
     }
     return render(request, 'app/subcategories/index.html', data)
 
+def categories(request):
+    categories = Categories.objects.all()
+
+    data = {
+        'categories' : categories
+    }
+
+    return render(request, 'app/index/categories.html', data)
 
 def posts(request, subcategory_id=None):
     try:
