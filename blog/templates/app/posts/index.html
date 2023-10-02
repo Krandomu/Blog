@@ -1,0 +1,35 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+
+{% for post in posts %}
+    <h1>{{ post.name }}</h1>
+    {% for elemento in post.elementos %}
+        {% if elemento.get_seccion_tipo == 'titulo' %}
+            <h4>{{ elemento.contenido }}</h4>
+        {% elif elemento.get_seccion_tipo == 'texto' %}
+            <p>{{ elemento.contenido }}</p>
+        {% elif elemento.get_seccion_tipo == 'codigo' %}
+            <div class="code-toolbar">
+                <pre class="language-{{ elemento.lenguaje }}"><code>{{ elemento.contenido|safe }}</code></pre>
+                <button class="copy-button" data-clipboard-target="#codigo-{{ elemento.id }}">Copiar</button>
+            </div>
+        {% elif elemento.get_seccion_tipo == 'imagen' %}
+            <img src="{{ elemento.archivo.url }}" alt="{{ elemento.nombre }}">
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        Prism.highlightAll();
+        const clipboard = new ClipboardJS('.copy-button');
+        
+        clipboard.on('success', (e) => {
+            e.clearSelection();
+            console.log('Copiado al portapapeles: ', e.text);
+        });
+    });
+</script>
+
+{% endblock %}

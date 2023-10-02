@@ -52,10 +52,8 @@
                     <span class="mdi mdi-menu"></span>
                 </button>
                 <div class="form-group">
-
-                        <!-- Mostrar el contenido en un input como un placeholder si no es "codigo" -->
-                        <input type="text" class="form-control" placeholder="{{ elemento.contenido|safe }}">
-
+                    <!-- Mostrar el contenido en un campo de texto editable -->
+                    <input type="text" class="form-control" name="nuevo_contenido" value="{{ elemento.contenido|safe }}">
                 </div>
                 <button type="submit" class="btn btn-danger float-right mt-2 ml-3" name="action" value="delete">Delete</button>
                 <button type="submit" class="btn btn-primary float-right mt-2 ml-3" name="action" value="update">Update</button>

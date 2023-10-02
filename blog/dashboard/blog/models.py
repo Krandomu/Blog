@@ -43,6 +43,7 @@ class Textos(models.Model):
 
 class Codigos(models.Model):
     contenido = models.TextField(blank=True, null=True)
+    lenguaje = models.CharField(max_length=100, blank=True, null=True)  # Agrega un campo para el lenguaje del código
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='codigos')
 
