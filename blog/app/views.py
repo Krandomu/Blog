@@ -51,7 +51,7 @@ def posts(request, subcategory_id=None):
             elementos_post = []
             for codigo in codigos:
                 original_contenido = codigo.contenido
-                lexer = get_lexer_by_name("python", stripall=True)
+                lexer = get_lexer_by_name(str(codigo.lenguaje), stripall=True)
                 formatter = HtmlFormatter(linenos=False, cssclass="code")
                 codigo.contenido = highlight(original_contenido, lexer, formatter)
 
