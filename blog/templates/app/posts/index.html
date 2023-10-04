@@ -1,7 +1,17 @@
 {% extends "app/base.html" %}
 
 {% block content %}
-
+<style>
+    pre code {
+    /* Elimina o comenta esta regla CSS */
+    display: block;
+    overflow-x: auto;
+    background-color: #302e2e;
+    padding: 10px;
+    text-align: left; 
+    border-radius: 3px;
+}
+</style>
 <div class="row">
     <div class="col-md-2">
         <div class="sidebar">
@@ -23,7 +33,6 @@
     </div>
 
     
-    
     <div class="col-md-10 ">
         {% for post in posts %}
             <div class="post-content text-center my-4 mx-2">
@@ -35,7 +44,7 @@
                         <p class="text-justify">{{ elemento.contenido|linebreaks }}</p>
                     {% elif elemento.get_seccion_tipo == 'codigo' %}
                         <div class="code-toolbar mt-3 mb-4">
-                            <pre class="line-numbers-hidden language-{{ elemento.lenguaje }}"><code>{{ elemento.contenido|safe }}</code></pre>
+                            <pre><code class="line-numbers-hidden language-{{ elemento.lenguaje }}">{{ elemento.contenido|safe }}</code></pre>
                             <button class="copy-button btn btn-primary" data-clipboard-target="#codigo-{{ elemento.id }}">Copiar</button>
                         </div>
                     {% elif elemento.get_seccion_tipo == 'imagen' %}
@@ -49,15 +58,15 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        Prism.highlightAll();
-        const clipboard = new ClipboardJS('.copy-button');
-        
-        clipboard.on('success', (e) => {
-            e.clearSelection();
-            console.log('Copiado al portapapeles: ', e.text);
-        });
+document.addEventListener('DOMContentLoaded', () => {
+    Prism.highlightAll();
+    const clipboard = new ClipboardJS('.copy-button');
+    
+    clipboard.on('success', (e) => {
+        e.clearSelection();
+        console.log('Copiado al portapapeles: ', e.text);
     });
+});
 </script>
 
 {% endblock %}

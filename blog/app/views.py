@@ -4,6 +4,9 @@ from markdown import markdown
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
+class MyHtmlFormatter(HtmlFormatter):
+    def __init__(self, **options):
+        super().__init__(style='colorful', **options)  # Puedes cambiar 'colorful' por el estilo que desees
 
 
 def index(request):
@@ -51,14 +54,11 @@ def posts(request, subcategory_id=None):
             elementos_post = []
             for codigo in codigos:
                 original_contenido = codigo.contenido
-                lexer = get_lexer_by_name(str(codigo.lenguaje), stripall=True)
-                formatter = HtmlFormatter(linenos=False, cssclass="code")
-                codigo.contenido = highlight(original_contenido, lexer, formatter)
-
-                codigo.contenido = markdown(codigo.contenido, extensions=['codehilite'])
-
-
-            # Agregar todos los elementos a la lista
+                lexer = get_lexer_by_name(codigo.lenguaje, stripall=True)
+                formatter = MyHtmlFormatter(linenos=False, cssclass="code")
+                highlighted_code = highlight(original_contenido, lexer, formatter)
+                codigo.contenido = markdown(highlighted_code, extensions=['fenced_code'])
+            
             elementos_post.extend(titulos)
             elementos_post.extend(textos)
             elementos_post.extend(codigos)
