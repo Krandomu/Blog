@@ -35,8 +35,8 @@
     
     <div class="col-md-10 ">
         {% for post in posts %}
-            <div class="post-content text-center my-4 mx-2">
-                <h1>{{ post.name }}</h1>
+            <div class="post-content my-4 mx-2">
+                <h1 class="text-center">{{ post.name }}</h1>
                 {% for elemento in post.elementos %}
                     {% if elemento.get_seccion_tipo == 'titulo' %}
                         <h4>{{ elemento.contenido }}</h4>
@@ -45,7 +45,9 @@
                     {% elif elemento.get_seccion_tipo == 'codigo' %}
                         <div class="code-toolbar mt-3 mb-4">
                             <pre><code class="line-numbers-hidden language-{{ elemento.lenguaje }}">{{ elemento.contenido|safe }}</code></pre>
+                            <div class="text-center">
                             <button class="copy-button btn btn-primary" data-clipboard-target="#codigo-{{ elemento.id }}">Copiar</button>
+                            </div>
                         </div>
                     {% elif elemento.get_seccion_tipo == 'imagen' %}
                         <img class="img-fluid" src="{{ elemento.archivo.url }}" alt="{{ elemento.nombre }}">

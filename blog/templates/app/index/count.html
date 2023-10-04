@@ -1,31 +1,51 @@
-
-    <!-- ======= Counts Section ======= -->
-    <section id="counts" class="counts">
-        <div class="container">
-
-            <div class="row counters">
-
+<section id="counts" class="counts">
+    <div class="container">
+        <div class="row counters">
             <div class="col-lg-3 col-6 text-center">
-                <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-                <p>Clients</p>
+                <span id="years" class="purecounter"></span>
+                <p>Years</p>
             </div>
-
             <div class="col-lg-3 col-6 text-center">
-                <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-                <p>Projects</p>
+                <span id="months" class="purecounter"></span>
+                <p>Months</p>
             </div>
-
             <div class="col-lg-3 col-6 text-center">
-                <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-                <p>Hours Of Support</p>
+                <span id="days" class="purecounter"></span>
+                <p>Days</p>
             </div>
-
             <div class="col-lg-3 col-6 text-center">
-                <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-                <p>Hard Workers</p>
+                <span id="hours" class="purecounter"></span>
+                <p>Hours</p>
             </div>
-
-            </div>
-
         </div>
-        </section><!-- End Counts Section -->
+    </div>
+</section>
+<script>
+    // Fecha de referencia (1 de enero de 2023)
+    const referenceDate = new Date('2023-01-01T00:00:00Z');
+
+    function updateCounters() {
+        const currentDate = new Date();
+        const timeDifference = currentDate - referenceDate;
+
+        const years = Math.floor(timeDifference / (365 * 24 * 60 * 60 * 1000));
+        const remainingTime = timeDifference - years * 365 * 24 * 60 * 60 * 1000;
+        const months = Math.floor(remainingTime / (30 * 24 * 60 * 60 * 1000));
+        const remainingDays = remainingTime - months * 30 * 24 * 60 * 60 * 1000;
+        const days = Math.floor(remainingDays / (24 * 60 * 60 * 1000));
+        const remainingHours = remainingDays - days * 24 * 60 * 60 * 1000;
+        const hours = Math.floor(remainingHours / (60 * 60 * 1000));
+
+        // Actualiza los contadores en el HTML
+        document.getElementById('years').textContent = years;
+        document.getElementById('months').textContent = months;
+        document.getElementById('days').textContent = days;
+        document.getElementById('hours').textContent = hours;
+    }
+
+    // Actualiza los contadores cada segundo
+    setInterval(updateCounters, 1000);
+
+    // Llama a la función una vez para mostrar los contadores inmediatamente
+    updateCounters();
+</script>

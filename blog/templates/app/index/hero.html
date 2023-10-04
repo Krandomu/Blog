@@ -1,16 +1,36 @@
-
 <!-- ======= Head Section ======= -->
 <section id="hero" class="d-flex align-items-center">
 
-    <div class="container-fluid" data-aos="fade-up">
-      <div class="row justify-content-center">
-        <div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
-          <h1>Bettter Digital Experience With Techie</h1>
-          <h2>We are team of talented designers making websites with Bootstrap</h2>
-        </div>
-        <div class="col-xl-4 col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="150">
-          <img src="assets/img/hero-img.png" class="img-fluid animated" alt="">
-        </div>
+  <div class="container-fluid" data-aos="fade-up">
+    <div class="row justify-content-center">
+      <div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+        <h1>Viksant</h1>
+        <h2 class="Titulo_Cambiante">And I'm a <span class="typed"></span></h2>
+      </div>
+      <div class="col-xl-4 col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="150">
+        <dotlottie-player src="https://lottie.host/becd6fcb-9879-40ea-9e38-3837b8b06103/YaRTwvycAB.json" background="transparent" speed="1" style="width: 450px; height: 450px;" loop autoplay></dotlottie-player>
       </div>
     </div>
+  </div>
 </section><!-- End Hero -->
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script> <!-- Asegúrate de incluir la biblioteca Typed.js -->
+
+<script>
+const typed = new Typed('.typed', {
+  strings: [
+      '<i class="Profesion">DEVELOPER</i>',
+      '<i class="Profesion">PENTESTER</i>'
+  ],
+  typeSpeed: 60, // Velocidad en ms para poner una letra,
+  startDelay: 300, // Tiempo de retraso en iniciar la animacion. Aplica tambien cuando termina y vuelve a iniciar,
+  backSpeed: 70, // Velocidad en milisegundos para borrrar una letra,
+  smartBackspace: true, // Eliminar solamente las palabras que sean nuevas en una cadena de texto.
+  shuffle: false, // Alterar el orden en el que escribe las palabras.
+  backDelay: 1500, // Tiempo de espera despues de que termina de escribir una palabra.
+  loop: true, // Repetir el array de strings
+  loopCount: false, // Cantidad de veces a repetir el array.  false = infinite
+  contentType: 'html', // 'html' o 'null' para texto sin formato
+  showCursor: false, // Deshabilitar el curso palpitando
+});
+</script>
