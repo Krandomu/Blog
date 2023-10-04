@@ -11,7 +11,7 @@
 --------------------------------------------------------------*/
 body {
   font-family: "Open Sans", sans-serif;
-  color: #444444;
+  color: #ffffff;
 }
 
 a {
@@ -123,7 +123,7 @@ h6 {
 
 #header.header-scrolled,
 #header.header-inner-pages {
-  background: rgba(24, 6, 185, 0.8);
+  background: rgb(26, 28, 29);
   padding: 12px 0;
 }
 
@@ -670,7 +670,7 @@ section {
   text-align: center;
   padding: 70px 20px 80px 20px;
   transition: all ease-in-out 0.3s;
-  background: #fff;
+  background: rgb(20, 22, 23);
 }
 
 .services .icon-box .icon {
@@ -882,7 +882,7 @@ section {
   font-style: italic;
   margin: 0 15px 0 15px;
   padding: 20px 20px 60px 20px;
-  background: #fff;
+  background: rgb(20, 22, 23);
   position: relative;
   border-radius: 6px;
   position: relative;
@@ -1314,9 +1314,9 @@ section {
 .contact .info-box {
   color: #444444;
   text-align: center;
-  box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
   padding: 20px 0 30px 0;
-  background: #fff;
+  background: rgb(26, 28, 29);
 }
 
 .contact .info-box i {
@@ -1343,7 +1343,7 @@ section {
 .contact .php-email-form {
   box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
   padding: 30px;
-  background: #fff;
+  background: linear-gradient(90deg, rgba(149,8,8,1) 0%, rgba(37,39,40,1) 100%, rgba(89,69,69,1) 100%);;
 }
 
 .contact .php-email-form .error-message {
@@ -1370,7 +1370,7 @@ section {
 
 .contact .php-email-form .loading {
   display: none;
-  background: #fff;
+  background: rgb(26, 28, 29);
   text-align: center;
   padding: 15px;
 }
@@ -1383,7 +1383,7 @@ section {
   height: 24px;
   margin: 0 10px -6px 0;
   border: 3px solid #18d26e;
-  border-top-color: #eee;
+  border-top-color: #000000;
   animation: animate-loading 1s linear infinite;
 }
 
@@ -1401,10 +1401,11 @@ section {
 
 .contact .php-email-form input {
   padding: 10px 15px;
+  background: rgb(47, 50, 52);
 }
-
 .contact .php-email-form textarea {
   padding: 12px 15px;
+  background: rgb(47, 50, 52);
 }
 
 .contact .php-email-form button[type=submit] {
@@ -1491,7 +1492,7 @@ section {
 #footer {
   color: #fff;
   font-size: 14px;
-  background: linear-gradient(45deg, rgba(86, 58, 250, 0.9) 0%, rgba(116, 15, 214, 0.9) 100%), url("../img/hero-bg.jpg") center center no-repeat;
+  background: linear-gradient(90deg, rgba(149,8,8,1) 0%, rgba(37,39,40,1) 100%, rgba(89,69,69,1) 100%);
   background-size: cover;
 }
 
@@ -1591,6 +1592,7 @@ section {
   border: 0;
   padding: 4px 8px;
   width: calc(100% - 100px);
+  background: rgb(47, 50, 52);
 }
 
 #footer .footer-newsletter form input[type=submit] {

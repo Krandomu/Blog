@@ -6,18 +6,27 @@
     /* Elimina o comenta esta regla CSS */
     display: block;
     overflow-x: auto;
-    background-color: #302e2e;
+    background-color: #221f1f;
+    background: rgb(37, 34, 34);
     padding: 10px;
     text-align: left; 
     border-radius: 3px;
+
+}
+.background-posts{
+    background: rgb(47, 50, 52);
+}
+.font-white {
+
+color: #fff;
 }
 </style>
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-2 background-posts">
         <div class="sidebar">
             <ul class="list-group list-group-flush">
                 {% for post in posts %}
-                    <li class="list-group-item sidebar-post mb-2" data-toggle="collapse" data-target="#post{{ loop.index }}">
+                    <li class="list-group-item sidebar-post mb-2 background-posts font-white" data-toggle="collapse" data-target="#post{{ loop.index }}">
                         {{ post.name }}
                     </li>
                     <div id="post{{ loop.index }}" class="collapse">
@@ -33,7 +42,7 @@
     </div>
 
     
-    <div class="col-md-10 ">
+    <div class="col-md-10 background-posts">
         {% for post in posts %}
             <div class="post-content my-4 mx-2">
                 <h1 class="text-center">{{ post.name }}</h1>
