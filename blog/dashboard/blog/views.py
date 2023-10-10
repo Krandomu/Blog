@@ -10,7 +10,8 @@ import markdown
 @login_required(login_url='/accounts/login/')
 def blog(request):
     categories = Categories.objects.all()
-    return render(request, 'dashboard/blog/index.html', {'categories': categories})
+    subcategories = SubCategories.objects.all()
+    return render(request, 'dashboard/blog/index.html', {'categories': categories, 'subcategories': subcategories})
 
 @login_required(login_url='/accounts/login/')
 def add_category(request):

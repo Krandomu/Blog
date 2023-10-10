@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <div class="col-xl-8 col-sm-8 grid-margin stretch-card">
+    <div class="col-xl-6 col-sm-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title text-center">Add Category</h4>
@@ -102,14 +102,18 @@
         </div>
     </div>
 
-    <div class="col-md-4 grid-margin stretch-card">
+    <div class="col-xl-6 col-sm-6 grid-margin stretch-card">
         <div class="card">
-          <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-            <h4 class="card-title text-center">Porcentajes</h4>
-            <canvas id="transaction-history" class="transaction-chart chartjs-render-monitor" style="display: block; width: 199px; height: 99px;" width="199" height="99"></canvas>
-          </div>
+            <div class="card-body">
+                <h4 class="card-title text-center">Add Post</h4>
+                    <p class="card-description text-center">Añade un post rapidamente.</p>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block mt-4"data-toggle="modal" data-target="#addPostModal" data-title="Add Post">ADD</button>
+
+                </form>
+
+            </div>
         </div>
-      </div>
+    </div>
 
 
 
@@ -151,9 +155,43 @@
             </div>
         </div>
     </div>
-
-
-
+    <div class="modal fade" id="addPostModal" tabindex="-1" role="dialog" aria-labelledby="addPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content pop-up-color">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="categoria">Categoría:</label>
+                            <select id="categoria" name="categoria" class="form-control">
+                                {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subcategoria">Subcategoría:</label>
+                            <select id="subcategoria" name="subcategoria" class="form-control"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Nombre del post:</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% for category in categories %}
 
@@ -182,9 +220,9 @@
             </div>
         </div>
     </div>
-</div>
-{% endfor %}
 
+{% endfor %}
+</div>
 
 
 
@@ -197,6 +235,8 @@
             modal.find('.modal-title').text(title);
         });
     });
+
+    
 </script>
 
 {% endblock %}
